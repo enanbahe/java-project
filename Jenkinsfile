@@ -19,7 +19,7 @@ pipeline {
 
     stage('Deploy') {
       steps {
-        sh 'aws s3 cp dist/rectangle_${env.BUILD_NUMBER}.jar s3://eb-artifact-repo/java/jar/rectangle_${env.BUILD_NUMBER}.jar'
+        sh 'aws s3 cp dist/rectangle_${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/jar/rectangle_${BUILD_NUMBER}.jar'
       }      
     }
   }
