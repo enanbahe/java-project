@@ -28,7 +28,7 @@ pipeline {
 
     stage('Artifact Repo') {
       steps {
-        sh 'sudo aws s3 cp dist/rectangle_${env.MAJOR_VERSION}.${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/branches/${BRANCH_NAME}/rectangle_${env.MAJOR_VERSION}.${BUILD_NUMBER}.jar'
+        sh 'sudo aws s3 cp dist/rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/branches/${BRANCH_NAME}/rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar'
       }      
     }
 
@@ -40,8 +40,8 @@ pipeline {
         }
       }
       steps {
-        sh 'wget https://s3.amazonaws.com/eb-artifact-repo/java/branches/${BRANCH_NAME}/rectangle_${env.MAJOR_VERSION}.${BUILD_NUMBER}.jar'
-        sh 'java -jar rectangle_${env.MAJOR_VERSION}.${BUILD_NUMBER}.jar 3 4'
+        sh 'wget https://s3.amazonaws.com/eb-artifact-repo/java/branches/${BRANCH_NAME}/rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar'
+        sh 'java -jar rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar 3 4'
       }
     }
 
@@ -66,8 +66,8 @@ pipeline {
         echo 'Pushing to origin master...'
         sh 'git push origin master'
         echo 'Tagging a release...'
-        sh 'git tag rectangle-${env.MAJOR_VERSION}.${BUILD_NUMBER}'
-        sh 'git push origin rectangle-${env.MAJOR_VERSION}.${BUILD_NUMBER}'
+        sh 'git tag rectangle-${MAJOR_VERSION}.${BUILD_NUMBER}'
+        sh 'git push origin rectangle-${MAJOR_VERSION}.${BUILD_NUMBER}'
       }
     }
 
@@ -76,7 +76,7 @@ pipeline {
         branch 'master'
       }
       steps {
-        sh 'sudo aws s3 cp dist/rectangle_${env.MAJOR_VERSION}.${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/releases/rectangle_${env.MAJOR_VERSION}.${BUILD_NUMBER}.jar'
+        sh 'sudo aws s3 cp dist/rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/releases/rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar'
       }      
     }
   }
