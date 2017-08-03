@@ -36,11 +36,11 @@ pipeline {
         }
       }
       steps {
-        sh 'mkdir /java_test_${BUILD_NUMBER}'
-        sh 'cd /java_test_${BUILD_NUMBER}'
+        sh 'mkdir ~/java_test_${BUILD_NUMBER}'
+        sh 'cd ~/java_test_${BUILD_NUMBER}'
         sh 'wget https://s3.amazonaws.com/eb-artifact-repo/java/branches/${BRANCH_NAME}/rectangle_${BUILD_NUMBER}.jar'
         sh 'java -jar rectangle_${BUILD_NUMBER}.jar 3 4'
-        sh 'rm -R /java_test_${BUILD_NUMBER}'
+        sh 'rm -R ~/java_test_${BUILD_NUMBER}'
       }
     }
 
