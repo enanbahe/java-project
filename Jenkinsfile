@@ -1,10 +1,11 @@
 pipeline {
-  agent {
-    label 'Slave01'
-  }
+  agent none
 
   stages {
     stage('Unit test') {
+      agent {
+        label 'ant'
+      }
       steps {
         sh 'ant -f test.xml -v'
         junit 'reports/result.xml'
@@ -12,6 +13,9 @@ pipeline {
     }
 
     stage('Build') {
+      agent {
+        label 'ant'
+      }
       steps {
         sh 'ant -f build.xml -v'
       }      
@@ -23,6 +27,9 @@ pipeline {
     }
 
     stage('Artifact Repo') {
+      agent {
+        label 'aws'
+      }
       steps {
         sh 'sudo aws s3 cp dist/rectangle_${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/jar/rectangle_${BUILD_NUMBER}.jar'
       }      
