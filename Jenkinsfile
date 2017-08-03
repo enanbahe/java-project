@@ -1,11 +1,10 @@
 pipeline {
-  agent none
+  agent {
+    label 'ant'
+  }
 
   stages {
     stage('Unit test') {
-      agent {
-        label 'ant'
-      }
       steps {
         sh 'ant -f test.xml -v'
         junit 'reports/result.xml'
@@ -13,9 +12,6 @@ pipeline {
     }
 
     stage('Build') {
-      agent {
-        label 'ant'
-      }
       steps {
         sh 'ant -f build.xml -v'
       }      
@@ -27,9 +23,6 @@ pipeline {
     }
 
     stage('Artifact Repo') {
-      agent {
-        label 'aws'
-      }
       steps {
         sh 'sudo aws s3 cp dist/rectangle_${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/branches/${BRANCH_NAME}/rectangle_${BUILD_NUMBER}.jar'
       }      
@@ -37,8 +30,10 @@ pipeline {
 
     stage('Test on Debian') {
       agent {
-        docker 'openjdk:8u121-jre'
-        reuseNode true
+        docker {
+          image 'openjdk:8u121-jre'
+          reuseNode true
+        }
       }
       steps {
         sh 'mkdir java-test'
@@ -49,9 +44,6 @@ pipeline {
     }
 
     stage('Promote to master') {
-      agent {
-        label 'ant'
-      }
       when {
         branch 'development'
       }
@@ -70,9 +62,6 @@ pipeline {
     }
 
     stage('Release') {
-      agent {
-        label 'aws'
-      }
       when {
         branch 'master'
       }
