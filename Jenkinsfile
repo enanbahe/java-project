@@ -38,7 +38,7 @@ pipeline {
     stage('Test on Debian') {
       agent {
         docker 'openjdk:8u121-jre'
-        label 'docker'
+        reuseNode true
       }
       steps {
         sh 'mkdir java-test'
