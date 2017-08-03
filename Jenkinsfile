@@ -44,6 +44,9 @@ pipeline {
     }
 
     stage('Promote to master') {
+      agent {
+        label 'master'
+      }
       when {
         branch 'development'
       }
