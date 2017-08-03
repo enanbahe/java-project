@@ -36,8 +36,8 @@ pipeline {
         }
       }
       steps {
-        sh "if ![ -d 'java-test' ]; then mkdir java-test; fi"
-        sh 'cd java-test'
+        sh "if ![ -d '/java-test' ]; then mkdir /java-test; fi"
+        sh 'cd /java-test'
         sh 'wget https://s3.amazonaws.com/eb-artifact-repo/java/branches/${BRANCH_NAME}/rectangle_${BUILD_NUMBER}.jar'
         sh 'java -jar rectangle_${BUILD_NUMBER}.jar 3 4'
       }
