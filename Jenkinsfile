@@ -69,6 +69,16 @@ pipeline {
         sh 'git tag rectangle-${MAJOR_VERSION}.${BUILD_NUMBER}'
         sh 'git push origin rectangle-${MAJOR_VERSION}.${BUILD_NUMBER}'
       }
+	  post {
+	    success {
+	      emailext(
+	        subject: "${JOB_NAME} [${BUILD_NUMBER}] ${BRANCH_NAME} promoted to master!",
+	        body: """<p>'${JOB_NAME} [${BUILD_NUMBER}]' ${BRANCH_NAME} promoted to master!":</p>
+	        <p>Check console output at &QUOT;<a href='${BUILD_URL}'>${JOB_NAME} [${BUILD_NUMBER}]</a>&QUOT;</p>""",
+	        to: 'enanbahe@hotmail.com'
+	      )
+	    }
+	  }
     }
 
     stage('Release') {
@@ -78,6 +88,17 @@ pipeline {
       steps {
         sh 'sudo aws s3 cp dist/rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar s3://eb-artifact-repo/java/releases/rectangle_${MAJOR_VERSION}.${BUILD_NUMBER}.jar'
       }      
+    }
+  }
+
+  post {
+    failure {
+      emailext(
+        subject: "${JOB_NAME} [${BUILD_NUMBER}] Failed!",
+        body: """<p>'${JOB_NAME} [${BUILD_NUMBER}]' Failed!":</p>
+        <p>Check console output at &QUOT;<a href='${BUILD_URL}'>${JOB_NAME} [${BUILD_NUMBER}]</a>&QUOT;</p>""",
+        to: 'enanbahe@hotmail.com'
+      )
     }
   }
 }
