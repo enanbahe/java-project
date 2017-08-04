@@ -74,7 +74,7 @@ pipeline {
 	      emailext(
 	        subject: "${JOB_NAME} [${BUILD_NUMBER}] ${BRANCH_NAME} promoted to master!",
 	        body: """<p>'${JOB_NAME} [${BUILD_NUMBER}]' ${BRANCH_NAME} promoted to master!":</p>
-	        <p>Check console output at &QUOT;<a href='${BUILD_URL}'>${JOB_NAME} [${BUILD_NUMBER}]</a>&QUOT;</p>""",
+	        <p>Check console output at &QUOT;<a href='$BUILD_URL'>${JOB_NAME} [${BUILD_NUMBER}]</a>&QUOT;</p>""",
 	        to: 'enanbahe@hotmail.com'
 	      )
 	    }
@@ -96,7 +96,7 @@ pipeline {
       emailext(
         subject: "${JOB_NAME} [${BUILD_NUMBER}] Failed!",
         body: """<p>'${JOB_NAME} [${BUILD_NUMBER}]' Failed!":</p>
-        <p>Check console output at &QUOT;<a href='${BUILD_URL}'>${JOB_NAME} [${BUILD_NUMBER}]</a>&QUOT;</p>""",
+        <p>Check console output at &QUOT;<a href='$BUILD_URL'>${JOB_NAME} [${BUILD_NUMBER}]</a>&QUOT;</p>""",
         to: 'enanbahe@hotmail.com'
       )
     }
